@@ -1,0 +1,22 @@
+{% extends 'plugins/plugin_base.html' %}{% load i18n %}
+{% block content %}
+    <h2>{{ form_title }}</h2>
+     {% if form.non_field_errors %}
+    <ul class="form-messages">{% for error in form.non_field_errors %}
+        <li class="error">{{ error }} </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+   <form action="" method="post" class="horizontal">{% csrf_token %}
+        {% for field in form %}
+            <div class="fieldWrapper">
+                {{ field.errors }}
+                {{ field.label_tag }}: {{ field }}
+            </div>
+        {% endfor %}
+        <div class="fieldWrapper">
+            <input type="submit" value="{% trans "Save" %}" /> <a class="button" href="javascript:history.back()">{% trans "Back" %}</a>
+        </div>
+    </form>
+
+{% endblock %}

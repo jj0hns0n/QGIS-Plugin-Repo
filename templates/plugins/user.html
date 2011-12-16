@@ -1,0 +1,32 @@
+{% extends 'plugins/plugin_list.html' %}{% load i18n %}
+
+{% block content %}
+
+    {% if user.is_staff %}
+    <h2>{% trans "User Details of: " %} {{ plugin_user.username }}</h2>
+
+    <ul>
+        {% if  plugin_user.first_name %}<li>{% trans "First name: " %} {{ plugin_user.first_name }}</li>{% endif %}
+        {% if  plugin_user.last_name %}<li>{% trans "Last name: " %} {{ plugin_user.last_name }}</li>{% endif %}
+        <li>{% trans "Email: " %} {{ plugin_user.email }}</li>
+    </ul>
+    <form method="post" action="{% url user_permissions_manage plugin_user.username %}">
+    <div>
+        <ul class="actions">
+            {% if plugin_user.is_active %}
+            <li><input type="submit" id="user_block" name="user_block" value="{% trans "Block author" %}" /></li>{% else %}
+                <li><input type="submit" id="user_unblock" name="user_unblock" value="{% trans "Unblock author" %}" /></li>
+            {% endif %}
+            {% if plugin_user.is_active %}
+            {% if not user_is_trusted %}<li><input type="submit" id="user_trust" name="user_trust" value="{% trans "Trust author" %}" /></li>{% else %}
+            <li><input type="submit" id="user_untrust" name="user_untrust" value="{% trans "Untrust author" %}" /></li>{% endif %}
+            {% endif %}
+        </ul>
+    </div>
+    </form>
+    {% endif %}
+
+    {{ block.super }}
+
+{% endblock %}
+

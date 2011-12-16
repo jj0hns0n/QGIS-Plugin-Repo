@@ -1,0 +1,25 @@
+{% extends 'plugins/plugin_base.html' %}{% load i18n %}
+{% block content %}
+    <h2>{% trans "Upload a plugin" %}</h2>
+    <p class="help">{% trans "To upload a new plugin or update an existing one, you can specify the zipped file in this form." %}</p>
+    <p>{% trans "Alternatively, to update an existing plugin, you can also open the plugin's details view and add a new version from there." %}</p>
+    {% if form.non_field_errors %}
+    <ul class="form-messages">{% for error in form.non_field_errors %}
+        <li class="error">{{ error }} </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <form action="" method="post" enctype="multipart/form-data" class="horizontal">{% csrf_token %}
+        {% for field in form %}
+            <div class="fieldWrapper">
+                {{ field.errors }}
+                {{ field.label_tag }}: {{ field }}
+                <div class="help">{{ field.help_text }}</div>
+            </div>
+        {% endfor %}
+
+        <p><input type="submit" value="{% trans "Upload" %}" /> <a class="button" href="javascript:history.back()">{% trans "Back" %}</a></p>
+
+    </form>
+
+{% endblock %}
