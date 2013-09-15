@@ -20,4 +20,8 @@ setup(
         "Topic :: Utilities",
         "License :: OSI Approved :: GPL",
     ],
+    install_requires=[
+        # native dependencies
+        
+    ],
 )
