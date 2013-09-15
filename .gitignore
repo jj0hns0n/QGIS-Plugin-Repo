@@ -1,0 +1,3 @@
+build/
+dist/
+qgis_plugins.egg-info/
