@@ -5,7 +5,7 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(
-    name = "qgis_plugins",
+    name = "qgis-plugins",
     version = "0.0.1",
     author = "Alessandro Pasotti",
     author_email = "apasotti@gmail.com",
@@ -14,14 +14,13 @@ setup(
     keywords = "qgis gis plugins osgeo",
     url = "http://plugins.qgis.org",
     packages=['plugins'],
-    long_description=read('README.rst'),
+    long_description=read('README'),
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Topic :: Utilities",
-        "License :: OSI Approved :: GPL",
+        "License :: OSI Approved :: GNU General Public License (GPL)"
     ],
     install_requires=[
-        # native dependencies
-        
+        "sorl-thumbnail"        
     ],
 )
