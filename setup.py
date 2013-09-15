@@ -4,6 +4,17 @@ from setuptools import setup
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
+packages, data_files = [], []
+for dirpath, dirnames, filenames in os.walk("plugins"):
+    # Ignore dirnames that start with '.'
+    for i, dirname in enumerate(dirnames):
+        if dirname.startswith('.'): del dirnames[i]
+    if '__init__.py' in filenames:
+        packages.append('.'.join(fullsplit(dirpath)))
+    elif filenames:
+        data_files.append([dirpath, [os.path.join(dirpath, f) for f in filenames]])
+data_files.append('docs')
+
 setup(
     name = "qgis-plugins",
     version = "0.0.1",
@@ -13,7 +24,8 @@ setup(
     license = "GPL",
     keywords = "qgis gis plugins osgeo",
     url = "http://plugins.qgis.org",
-    packages=['plugins'],
+    packages=packages,
+    data_files=data_files,
     long_description=read('README'),
     classifiers=[
         "Development Status :: 5 - Production/Stable",
@@ -30,5 +42,6 @@ setup(
         "django-taggit-autosuggest==0.2",
         "django-taggit-templatetags==0.4.6dev",
         "django-templatetag-sugar==0.1",
-    ],
+        "rpc4django=0.2.4",
+    ]
 )
