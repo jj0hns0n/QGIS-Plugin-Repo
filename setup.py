@@ -4,6 +4,21 @@ from setuptools import setup
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
+
+def fullsplit(path, result=None):
+    """
+    Split a pathname into components (the opposite of os.path.join) in a
+    platform-neutral way.
+    """
+    if result is None:
+        result = []
+    head, tail = os.path.split(path)
+    if head == '':
+        return [tail] + result
+    if head == path:
+        return result
+    return fullsplit(head, [tail] + result)
+
 packages, data_files = [], []
 for dirpath, dirnames, filenames in os.walk("plugins"):
     # Ignore dirnames that start with '.'
@@ -13,6 +28,10 @@ for dirpath, dirnames, filenames in os.walk("plugins"):
         packages.append('.'.join(fullsplit(dirpath)))
     elif filenames:
         data_files.append([dirpath, [os.path.join(dirpath, f) for f in filenames]])
+
+print packages
+print data_files
+
 data_files.append('docs')
 
 setup(
@@ -42,6 +61,6 @@ setup(
         "django-taggit-autosuggest==0.2",
         "django-taggit-templatetags==0.4.6dev",
         "django-templatetag-sugar==0.1",
-        "rpc4django=0.2.4",
+        "rpc4django==0.2.4"
     ]
 )
