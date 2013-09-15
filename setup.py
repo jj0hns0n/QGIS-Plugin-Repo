@@ -21,6 +21,14 @@ setup(
         "License :: OSI Approved :: GNU General Public License (GPL)"
     ],
     install_requires=[
-        "sorl-thumbnail"        
+        "Django==1.5.4",
+        "sorl-thumbnail==11.12", 
+        "django-pagination==1.0.7",
+        "django-ratings==0.3.7",
+        "django-sorting==0.1",
+        "django-taggit==0.9.3",
+        "django-taggit-autosuggest==0.2",
+        "django-taggit-templatetags==0.4.6dev",
+        "django-templatetag-sugar==0.1",
     ],
 )
