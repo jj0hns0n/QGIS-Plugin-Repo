@@ -1,51 +1,24 @@
 import os
 from setuptools import setup
+from distutils.command.install import INSTALL_SCHEMES
+from setuptools import find_packages
 
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
-
-
-def fullsplit(path, result=None):
-    """
-    Split a pathname into components (the opposite of os.path.join) in a
-    platform-neutral way.
-    """
-    if result is None:
-        result = []
-    head, tail = os.path.split(path)
-    if head == '':
-        return [tail] + result
-    if head == path:
-        return result
-    return fullsplit(head, [tail] + result)
-
-packages, data_files = [], []
-for dirpath, dirnames, filenames in os.walk("plugins"):
-    # Ignore dirnames that start with '.'
-    for i, dirname in enumerate(dirnames):
-        if dirname.startswith('.'): del dirnames[i]
-    if '__init__.py' in filenames:
-        packages.append('.'.join(fullsplit(dirpath)))
-    elif filenames:
-        data_files.append([dirpath, [os.path.join(dirpath, f) for f in filenames]])
-
-print packages
-print data_files
-
-data_files.append('docs')
 
 setup(
     name = "qgis-plugins",
     version = "0.0.1",
     author = "Alessandro Pasotti",
     author_email = "apasotti@gmail.com",
-    description = "A django pluggable used to serve a qgis plugin repository",
     license = "GPL",
+    description = "A django pluggable used to serve a qgis plugin repository",
+    long_description=read('README'),
     keywords = "qgis gis plugins osgeo",
     url = "http://plugins.qgis.org",
-    packages=packages,
-    data_files=data_files,
-    long_description=read('README'),
+    include_package_data=True,
+    packages=find_packages(), 
+    zip_safe=False,
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Topic :: Utilities",
